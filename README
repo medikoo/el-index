@@ -13,7 +13,7 @@ Code was based on bookmark.el which can be found in Emacs distribution
 2. Installation
 -------------------------------------------------------------------------------
 
-- Put `el-index' project into your load path
+Put `el-index' project into your load path
 
 -------------------------------------------------------------------------------
 3. Usage
@@ -25,7 +25,8 @@ Code was based on bookmark.el which can be found in Emacs distribution
 
 Invoke mode by calling `el-index-display' passing buffer name, items list and
 list of functions that will take care of: writing item name, selecting, renaming,
-deleting and reload index list. e.g.
+deleting and reload index list.
+See following example:
 
 (setq sample-items-group1
   '((first . optional)
