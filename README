@@ -1,0 +1,88 @@
+el-index --- Generic index mode for Emacs
+
+-------------------------------------------------------------------------------
+1. About
+-------------------------------------------------------------------------------
+
+Displays list of given items. By default you can select, delete and rename
+items. Other functionalities can be implemented via `el-index-mode-hook'.
+
+Code was based on bookmark.el which can be found in Emacs distribution
+
+-------------------------------------------------------------------------------
+2. Installation
+-------------------------------------------------------------------------------
+
+- Put `el-index' project into your load path
+
+-------------------------------------------------------------------------------
+3. Usage
+-------------------------------------------------------------------------------
+3.1 Initialization
+-------------------------------------------------------------------------------
+
+(require 'el-index/el-index)
+
+Invoke mode by calling `el-index-display' passing buffer name, items list and
+list of functions that will take care of: writing item name, selecting, renaming,
+deleting and reload index list. e.g.
+
+(setq sample-items-group1
+  '((first . optional)
+    (second . optional)
+    (third . optional)))
+
+(setq sample-items-group2
+  '((first2 . optional)
+    (second2 . optional)
+    (third2 . optional)))
+
+(setq sample-items
+  (list (cons "First Group" sample-items-group1)
+    (cons "Second Group" sample-items-group2)))
+
+(setq index-actions
+  '((write . (lambda (item)
+        (symbol-name (car item))))
+    (select . (lambda (item)
+        (message "%S selected" (car item))
+        (quit-window)))
+    (rename . (lambda (item newname)
+        (message "Rename %S %S" (car item) newname)
+        (if (and newname (not (equal newname "")))
+          (setcar item (intern newname))
+          (message "No new name given"))))
+    (delete . (lambda (item)
+        (setq sample-items-group1 (delq item sample-items-group1))
+        (setq sample-items-group2 (delq item sample-items-group2))))
+    (reload . sample-index-display)))
+
+(defun sample-index-display ()
+  (el-index-display "Sample index" sample-items index-actions))
+
+(sample-index-display)
+
+-------------------------------------------------------------------------------
+3.2 Interaction
+-------------------------------------------------------------------------------
+
+Keyboard bindings:
+
+RET -- Select item.
+
+r -- Rename item (prompts for new name)
+
+d -- Mark item to be deleted, and move down.
+C-d -- Mark item to be deleted, and move up.
+
+x -- Delete items marked with `D.
+
+u -- Remove all kinds of marks from current line.
+
+-------------------------------------------------------------------------------
+3.3 Available hooks
+-------------------------------------------------------------------------------
+
+el-index-mode-hook
+  `el-index-mode' is loaded. You can use to add other interactions to index
+  list.
