@@ -71,7 +71,7 @@ Keyboard bindings:
 
 RET -- Select item.
 
-r -- Rename item (prompts for new name)
+r -- Rename item (prompts for new name).
 
 d -- Mark item to be deleted, and move down.
 C-d -- Mark item to be deleted, and move up.
