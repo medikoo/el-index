@@ -112,6 +112,11 @@
 			(funcall (cdr (assoc 'reload el-index-func-map)))
 			(goto-char thispoint))))
 
+(defun el-index-reload ()
+	"Reloads index list."
+	(interactive)
+	(funcall (cdr (assoc 'reload el-index-func-map))))
+
 ;;;###autoload
 (defun el-index-display (name data func-map)
 	"Display index.
@@ -131,7 +136,6 @@
 			(add-text-properties point-cache (point)
 				'(font-lock-face el-index-heading))
 			(dolist (assoc (cdr section))
-				(message "ASSOC %S" assoc)
 				(let ((start (point)) end)
 					(insert "  " (funcall (cdr (assoc 'write func-map)) assoc))
 					(setq end (point))
@@ -181,6 +185,7 @@
 		(define-key map "x" 'el-index-execute-deletions)
 		(define-key map "d" 'el-index-mark-for-delete)
 		(define-key map "u" 'el-index-unmark)
+		(define-key map "g" 'el-index-reload)
 		(define-key map " " 'next-line)
 		(define-key map "n" 'next-line)
 		(define-key map "p" 'previous-line)
