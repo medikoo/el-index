@@ -130,7 +130,7 @@
 			(insert "% " (car section) "\n- --------\n")
 			(add-text-properties point-cache (point)
 				'(font-lock-face el-index-heading))
-			(dolist (setq assoc (car (cdr section)))
+			(dolist (assoc (cdr section))
 				(message "ASSOC %S" assoc)
 				(let ((start (point)) end)
 					(insert "  " (funcall (cdr (assoc 'write func-map)) assoc))
