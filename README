@@ -44,12 +44,11 @@ See following example:
 
 (setq index-actions
   '((write . (lambda (item)
-        (symbol-name (car item))))
+        (insert (symbol-name (car item)))))
     (select . (lambda (item)
         (message "%S selected" (car item))
         (quit-window)))
     (rename . (lambda (item newname)
-        (message "Rename %S %S" (car item) newname)
         (if (and newname (not (equal newname "")))
           (setcar item (intern newname))
           (message "No new name given"))))
@@ -67,7 +66,7 @@ See following example:
 3.2 Interaction
 -------------------------------------------------------------------------------
 
-Keyboard bindings:
+Default keyboard bindings:
 
 RET -- Select item.
 
@@ -80,10 +79,4 @@ x -- Delete items marked with `D.
 
 u -- Remove all kinds of marks from current line.
 
--------------------------------------------------------------------------------
-3.3 Available hooks
--------------------------------------------------------------------------------
-
-el-index-mode-hook
-  `el-index-mode' is loaded. You can use to add other interactions to index
-  list.
+You can add extra bindings with `local-key-set' when mode is loaded.

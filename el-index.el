@@ -26,9 +26,6 @@
 	'((t (:inherit font-lock-type-face)))
 	"Face used to highlight index heading.")
 
-(defvar el-index-mode-hook nil
-	"Hook that gets run when `el-index-mode' is loaded.")
-
 (defvar el-index-func-map
 	'((select . nil)
 		(rename . nil)
@@ -52,9 +49,20 @@
 (defun el-index-select ()
 	"Selects curent item."
 	(interactive)
+	(el-index-funcall-with-quit-window (cdr (assoc 'select el-index-func-map))))
+
+(defun el-index-funcall-with-quit-window (method)
+	"Quits window and calls METHOD on current item."
 	(let ((item (el-index-get-item-at-position)))
-		(if item
-			(funcall (cdr (assoc 'select el-index-func-map)) item))))
+		(when item
+			(quit-window)
+			(funcall method item))))
+
+(defun el-index-funcall (method)
+	"Calls METHOD on current item."
+	(let ((item (el-index-get-item-at-position)))
+		(when item
+			(funcall method item))))
 
 (defun el-index-mark-for-delete ()
 	"Mark current item for deletion."
@@ -137,7 +145,8 @@
 				'(font-lock-face el-index-heading))
 			(dolist (assoc (cdr section))
 				(let ((start (point)) end)
-					(insert "  " (funcall (cdr (assoc 'write func-map)) assoc))
+					(insert "  ")
+					(funcall (cdr (assoc 'write func-map)) assoc)
 					(setq end (point))
 					(if el-index-data-map
 						(nconc el-index-data-map (list
@@ -159,19 +168,13 @@
 (defun el-index-mode ()
 	"Major mode for index display.
 
-	RET -- select this item
-	r -- rename this item (prompts for new name).
-	d -- mark this item to be deleted, and move down.
-	C-d -- mark this item to be deleted, and move up.
-	x -- delete items marked with `D.
-	u -- remove all kinds of marks from current line."
+\\{el-index-mode-map}"
 	(kill-all-local-variables)
 	(use-local-map el-index-mode-map)
 	(setq truncate-lines t)
 	(setq buffer-read-only t)
 	(setq major-mode 'el-index-mode)
-	(setq mode-name "Index mode")
-	(run-mode-hooks 'el-index-mode-hook))
+	(setq mode-name "Index mode"))
 
 (setq el-index-mode-map
 	(let ((map (make-keymap)))
