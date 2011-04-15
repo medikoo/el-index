@@ -129,12 +129,11 @@
 (defun el-index-display (name data func-map)
 	"Display index.
 	Index is displayed in a buffer named NAME.
-	DATA is list of collections where each collections is cons
-	made of collection name and collection data.
-	Collection data is list of items to display. Item format is not specified.
+	DATA is association list of lists to be displayed. Each cons is made of name
+	and list. List item format is not specified.
 	FUNC-MAP is set of functions that are used to display and interact with list.
 	All following functions need to be provided:
-	write (item)  - Returns string that should represent item on list.
+	write (item)  - Returns string that should represent item in list.
 	select (item) - Action that should happen when user selects item
 	rename (item newname) - Rename item
 	delete (item) - Delete item
