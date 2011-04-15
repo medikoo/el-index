@@ -129,8 +129,16 @@
 (defun el-index-display (name data func-map)
 	"Display index.
 	Index is displayed in a buffer named NAME.
-	The leftmost column displays a D if the item is flagged for
-	deletion."
+	DATA is list of collections where each collections is cons
+	made of collection name and collection data.
+	Collection data is list of items to display. Item format is not specified.
+	FUNC-MAP is set of functions that are used to display and interact with list.
+	All following functions need to be provided:
+	write (item)  - Returns string that should represent item on list.
+	select (item) - Action that should happen when user selects item
+	rename (item newname) - Rename item
+	delete (item) - Delete item
+	'reload - Display list (used for refresh)."
 	(let ((buf (get-buffer-create (concat "*" name "*"))))
 		(if (or (window-dedicated-p) (window-minibuffer-p))
 			(pop-to-buffer buf)
