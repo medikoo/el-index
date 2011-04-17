@@ -4,8 +4,8 @@ el-index --- Generic index mode for Emacs
 1. About
 -------------------------------------------------------------------------------
 
-Displays list of given items. By default you can select, delete and rename
-items. Other functionalities can be implemented via `el-index-mode-hook'.
+Displays list of given items. By default you can configure select, delete and
+rename actions. Other custom actions may be applied via local keymap
 
 Code was based on bookmark.el which can be found in Emacs distribution
 
