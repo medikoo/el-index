@@ -203,4 +203,7 @@
 		(define-key map "r" 'el-index-rename)
 		map))
 
-(provide 'el-index/el-index)
+(provide 'el-index)
+;; Local Variables:
+;; tab-width: 2
+;; End:
